@@ -1,0 +1,3 @@
+-- This Sword Giver Made By Entity10185 --
+-- This Sword Giver Can be Copy --
+-- Follow My Profile for Anothers Kit --
