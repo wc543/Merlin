@@ -29,6 +29,7 @@ game.Players.PlayerAdded:Connect(function(Player)
 			multiplier += 0.25
 
 			humanoid.MaxHealth += 50
+			humanoid.Health = humanoid.MaxHealth
 
 		end
 	end)
