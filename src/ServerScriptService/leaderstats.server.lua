@@ -16,7 +16,9 @@ game.Players.PlayerAdded:Connect(function(Player)
 	ReqExp.Value = Level.Value * 10 -- Required Experience at level 1
 	local multiplier = 0.25
 
-	
+	local character = Player.Character or Player.CharacterAdded:Wait()
+	local humanoid = character:FindFirstChild("Humanoid")
+
 	Exp.Changed:Connect(function(Changed) --Checks to see if Exp has changed
 		if Exp.Value >= ReqExp.Value then --Checks to see if Exp is higher than ReqExp
 			                              
@@ -25,6 +27,9 @@ game.Players.PlayerAdded:Connect(function(Player)
 			Level.Value += 1 --Adds 1 to Level
 			ReqExp.Value += math.floor((10 * multiplier)) --Adds 10 times the multiplier to ReqExp
 			multiplier += 0.25
+
+			humanoid.MaxHealth += 50
+
 		end
 	end)
 end)
