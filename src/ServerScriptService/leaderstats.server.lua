@@ -28,7 +28,7 @@ game.Players.PlayerAdded:Connect(function(Player)
 			ReqExp.Value += math.floor((10 * multiplier)) --Adds 10 times the multiplier to ReqExp
 			multiplier += 0.25
 
-			humanoid.MaxHealth += 50
+			humanoid.MaxHealth += 25
 			humanoid.Health = humanoid.MaxHealth
 
 		end
