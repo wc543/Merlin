@@ -1,3 +1,23 @@
+local DataStoreService = game:getService("DataStoreService")
+local Players = game:getService("Player")
+
+local HealthStore = DataStoreService.GetDataStore("Health")
+local MaxHealthStore = DataStoreService.GetDataStore("MaxHealth")
+
+local PlayerUserID = player.UserId
+
+local setSuccess, errorMessage = pcall(function()
+	HeathStore:SetAsync(PlayerUserID, Health)
+end)
+
+local setSuccess, errorMessage = pcall(function()
+	MaxHealthStore:SetAsync(PlayerUserID, MaxHealth)
+end)
+
+if not setSuccess then
+	warn(errorMessage)
+end
+
 game.Players.PlayerAdded:Connect(function(Player) 
 	
 	local leaderstats = Instance.new("Folder", Player)
@@ -18,6 +38,14 @@ game.Players.PlayerAdded:Connect(function(Player)
 
 	local character = Player.Character or Player.CharacterAdded:Wait()
 	local humanoid = character:FindFirstChild("Humanoid")
+
+	local Health = humanoid.Health
+	Health.Name = "Health"
+	Health.Value = 100
+
+	local MaxHealth = humanoid.MaxHealth
+	MaxHealth.Name = "MaxHealth"
+	MaxHealth.Value = 100
 
 	Exp.Changed:Connect(function(Changed) --Checks to see if Exp has changed
 		if Exp.Value >= ReqExp.Value then --Checks to see if Exp is higher than ReqExp
