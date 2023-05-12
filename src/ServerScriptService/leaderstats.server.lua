@@ -1,3 +1,23 @@
+local DataStoreService = game:getService("DataStoreService")
+local Players = game:getService("Player")
+
+local HealthStore = DataStoreService.GetDataStore("Health")
+local MaxHealthStore = DataStoreService.GetDataStore("MaxHealth")
+
+local PlayerUserID = player.UserId
+
+local setSuccess, errorMessage = pcall(function()
+	HeathStore:SetAsync(PlayerUserID, Health)
+end)
+
+local setSuccess, errorMessage = pcall(function()
+	MaxHealthStore:SetAsync(PlayerUserID, MaxHealth)
+end)
+
+if not setSuccess then
+	warn(errorMessage)
+end
+
 game.Players.PlayerAdded:Connect(function(Player) 
 	
 	local leaderstats = Instance.new("Folder", Player)
@@ -16,7 +36,17 @@ game.Players.PlayerAdded:Connect(function(Player)
 	ReqExp.Value = Level.Value * 10 -- Required Experience at level 1
 	local multiplier = 0.25
 
-	
+	local character = Player.Character or Player.CharacterAdded:Wait()
+	local humanoid = character:FindFirstChild("Humanoid")
+
+	local Health = humanoid.Health
+	Health.Name = "Health"
+	Health.Value = 100
+
+	local MaxHealth = humanoid.MaxHealth
+	MaxHealth.Name = "MaxHealth"
+	MaxHealth.Value = 100
+
 	Exp.Changed:Connect(function(Changed) --Checks to see if Exp has changed
 		if Exp.Value >= ReqExp.Value then --Checks to see if Exp is higher than ReqExp
 			                              
@@ -25,6 +55,10 @@ game.Players.PlayerAdded:Connect(function(Player)
 			Level.Value += 1 --Adds 1 to Level
 			ReqExp.Value += math.floor((10 * multiplier)) --Adds 10 times the multiplier to ReqExp
 			multiplier += 0.25
+
+			humanoid.MaxHealth += 25
+			humanoid.Health = humanoid.MaxHealth
+
 		end
 	end)
 end)
